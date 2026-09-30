@@ -3,281 +3,373 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IA en el Aula · Acceso a Materiales Educativos — Grupo 01 · UTB</title>
+<title>IA en el Aula · Del texto único al aula multinivel — Grupo 01 · UTB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --utb-azul:#002D62;      /* azul institucional UTB */
-    --utb-azul-med:#00539F;
-    --utb-dorado:#F5A800;    /* dorado UTB */
-    --utb-claro:#EAF1F8;
-    --utb-blanco:#FFFFFF;
+    --azul:#002D62; --azul-med:#00539F; --dorado:#F5A800; --dorado2:#ffd156;
     --ok:#1F8A4C; --warn:#C0392B;
-    --tl-track:#c3d4e6;      /* línea base de la timeline */
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:'Segoe UI',Verdana,Arial,sans-serif;background:var(--utb-claro);color:#1a2333;line-height:1.55}
+  body{
+    font-family:'Nunito','Poppins',Verdana,sans-serif;
+    background:#eef3fb;color:#14233c;line-height:1.6;overflow-x:hidden;
+  }
+  /* ===== fondo animado ===== */
+  .bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(150deg,#e9f0fb 0%,#dce8f7 40%,#cfe0f3 100%)}
+  .blob{position:fixed;border-radius:50%;filter:blur(46px);opacity:.5;z-index:-1;animation:blob 16s ease-in-out infinite}
+  .b1{width:340px;height:340px;background:#7fa8d9;top:-80px;left:-80px}
+  .b2{width:300px;height:300px;background:#f7c95c;bottom:-60px;right:-60px;animation-delay:-5s}
+  .b3{width:260px;height:260px;background:#8fd0a8;top:40%;right:-90px;animation-delay:-9s}
+  @keyframes blob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
+  .spark{position:fixed;z-index:-1;font-size:1.1rem;animation:floaty 6s ease-in-out infinite;opacity:.55;pointer-events:none}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(12deg)}}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
 
-  /* ---- barra de progreso global (parte superior) ---- */
-  #progressbar{position:fixed;top:0;left:0;height:5px;width:0;background:linear-gradient(90deg,var(--utb-dorado),var(--utb-azul-med));z-index:100;transition:width .1s linear}
+  /* ===== HERO ===== */
+  header{position:relative;min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px;color:#fff;
+    background:linear-gradient(140deg,#001d42 0%,#002D62 45%,#00539F 100%);overflow:hidden}
+  header .halo{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,168,0,.28),transparent 60%);top:-220px;right:-160px;animation:pulse 5s ease-in-out infinite}
+  header .halo2{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(0,83,159,.6),transparent 60%);bottom:-140px;left:-120px;animation:pulse 7s ease-in-out infinite}
+  .kicker{display:inline-block;color:var(--dorado);font-weight:800;letter-spacing:3px;text-transform:uppercase;font-size:.78rem;background:rgba(255,255,255,.08);border:1px solid rgba(245,168,0,.5);padding:6px 18px;border-radius:40px;margin-bottom:20px}
+  header h1{font-size:clamp(2rem,6vw,3.6rem);font-weight:900;line-height:1.08;max-width:900px;margin:6px auto 14px;text-shadow:0 4px 24px rgba(0,0,0,.35)}
+  header h1 .grad{background:linear-gradient(90deg,var(--dorado),#ffdf88,var(--dorado));-webkit-background-clip:text;background-clip:text;color:transparent}
+  header .sub{max-width:760px;font-size:1.05rem;opacity:.94;font-weight:500}
+  header .tags{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  header .tag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff;font-weight:700;padding:7px 16px;border-radius:40px;font-size:.8rem;backdrop-filter:blur(4px)}
+  .scroll-hint{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dorado);font-weight:800;font-size:.8rem;letter-spacing:2px;text-transform:uppercase}
+  .mouse{width:24px;height:38px;border:2.5px solid var(--dorado);border-radius:14px;position:relative}
+  .mouse::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;border-radius:4px;background:var(--dorado);transform:translateX(-50%);animation:wheel 1.5s ease-in-out infinite}
+  @keyframes wheel{0%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,12px)}}
+  .hfloat{position:absolute;font-size:2.2rem;animation:floaty 5s ease-in-out infinite;opacity:.9}
+  .hf1{top:16%;left:9%;animation-delay:-1s}.hf2{top:24%;right:12%;animation-delay:-3s}
+  .hf3{bottom:20%;left:15%;animation-delay:-2s}.hf4{bottom:16%;right:18%;animation-delay:-4s}
 
-  header{background:linear-gradient(135deg,var(--utb-azul) 60%,var(--utb-azul-med));color:#fff;text-align:center;padding:38px 20px 30px}
-  header .kicker{color:var(--utb-dorado);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.8rem}
-  header h1{font-size:1.9rem;margin:10px 0 6px}
-  header p{opacity:.9;max-width:760px;margin:0 auto}
-  header .tags{margin-top:14px;font-size:.9rem}
+  /* ===== timeline ===== */
+  .wrap{max-width:980px;margin:0 auto;padding:90px 20px 30px;position:relative}
+  .tl-label-head{text-align:center;margin-bottom:14px;color:var(--azul);font-weight:900;font-size:clamp(1.5rem,4vw,2.3rem)}
+  .tl-label-head small{display:block;color:var(--azul-med);font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+  .timeline{position:relative}
+  .tl-track{position:absolute;left:50%;top:10px;bottom:10px;width:7px;transform:translateX(-50%);background:rgba(0,45,98,.14);border-radius:7px}
+  .tl-fill{position:absolute;left:50%;top:10px;width:7px;transform:translateX(-50%);height:0%;border-radius:7px;background:linear-gradient(180deg,var(--dorado),var(--azul-med));box-shadow:0 0 14px rgba(245,168,0,.7)}
 
-  /* ================= TIMELINE (menú interactivo) ================= */
-  .timeline-wrap{position:sticky;top:0;z-index:60;background:var(--utb-azul);box-shadow:0 4px 14px rgba(0,45,98,.25)}
-  .timeline-wrap::before{content:"";display:block;height:3px;background:var(--utb-dorado)}
-  .tl{max-width:1080px;margin:0 auto;padding:10px 14px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:2px}
-  /* línea base de la timeline (detrás de los nodos) */
-  .tl-trackbase{position:relative;flex:1;display:flex;align-items:center;justify-content:space-between;
-    background:linear-gradient(to right,transparent 0,#cdd9e6 6%,#cdd9e6 94%,transparent 100%);
-    height:70px;border-radius:20px;background-size:100% 4px;background-repeat:no-repeat;background-position:center}
-  /* línea de progreso que se rellena con el scroll */
-  .tl-progress{position:absolute;top:0;left:0;height:4px;top:33px;width:0%;
-    background:linear-gradient(90deg,var(--utb-dorado),#ffd156);border-radius:4px;box-shadow:0 0 8px rgba(245,168,0,.8);transition:width .12s linear}
-  .tl-node{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;width:96px;flex:0 0 auto}
-  .tl-dot{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--utb-azul);border:3px solid var(--tl-track);
-    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;transition:all .25s ease;
-    box-shadow:0 2px 6px rgba(0,0,0,.18)}
-  .tl-node .tl-label{color:#dce7f5;font-size:.66rem;text-align:center;line-height:1.1;font-weight:600;transition:color .25s}
-  .tl-node:hover .tl-dot{background:var(--utb-dorado);color:var(--utb-azul);border-color:var(--utb-dorado);transform:translateY(-2px) scale(1.08)}
-  .tl-node.active .tl-dot{background:var(--utb-dorado);border-color:var(--utb-dorado);color:var(--utb-azul);transform:scale(1.15);box-shadow:0 0 0 6px rgba(245,168,0,.25),0 2px 10px rgba(0,0,0,.3)}
-  .tl-node.active .tl-label{color:#fff;font-weight:800}
-  /* imagen animada entre los botones de la línea */
-  .tl-seg{position:relative;z-index:1;flex:1;height:34px;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .mitem{position:relative;margin:64px 0}
+  .mnode{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:4;width:66px;height:66px;border-radius:50%;
+    background:linear-gradient(140deg,#fff,#eaf1fa);border:4px solid var(--azul);box-shadow:0 6px 18px rgba(0,45,98,.3);
+    display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:var(--azul)}
+  .mnode .mi{position:absolute;font-size:1.2rem;bottom:-6px;right:-6px;background:var(--dorado);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.25)}
+  .mnode.pulse{animation:pulse 2.6s ease-in-out infinite}
+  .mitem .mcard{width:calc(50% - 84px);position:relative}
+  .mitem .mcard.side-right{margin-left:auto}
+  /* tarjeta glass */
+  .gcard{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:24px;box-shadow:0 12px 34px rgba(0,45,98,.12);backdrop-filter:blur(6px);
+    opacity:0;transform:translateY(34px) scale(.97);transition:opacity .8s ease,transform .8s ease}
+  .mitem.side-right .gcard{transform:translateY(34px) translateX(24px) scale(.97)}
+  .mitem.side-left .gcard{transform:translateY(34px) translateX(-24px) scale(.97)}
+  .mitem.in .gcard{opacity:1;transform:none}
+  .mcard h3{display:flex;align-items:center;gap:8px;color:var(--azul);border-left:6px solid var(--dorado);padding-left:12px;margin-bottom:12px;font-size:1.28rem;font-weight:800}
+  .mcard .mdecor{position:absolute;font-size:3.4rem;opacity:.16;pointer-events:none;animation:floaty 6s ease-in-out infinite}
+  .side-left .mdecor{right:-46px;top:-20px}.side-right .mdecor{left:-46px;top:-20px}
+  .tag{display:inline-block;background:var(--dorado);color:var(--azul);font-weight:800;border-radius:30px;padding:4px 14px;font-size:.72rem;margin-right:6px}
 
-  .a-float{animation:floaty 3s ease-in-out infinite}
-  .a-spin{animation:spin 7s linear infinite;transform-origin:center}
-  .a-pulse{animation:pulse 2s ease-in-out infinite}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-  @keyframes spin{100%{transform:rotate(360deg)}}
-  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+  /* escenario duo */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:640px){.duo{grid-template-columns:1fr}}
+  .card{border-radius:14px;padding:16px}
+  .antes{background:#FBEFF0;border-top:5px solid var(--warn)}
+  .despues{background:#E8F6EE;border-top:5px solid var(--ok)}
+  .card h4{font-size:.95rem;margin-bottom:6px}
+  .card p{font-size:.9rem}
+
+  /* modelo */
+  .modelo-box{background:linear-gradient(135deg,var(--azul),var(--azul-med));color:#fff;border-radius:16px;padding:20px;margin-bottom:12px}
+  .modelo-box b{color:var(--dorado2)}
+  ul.checks{list-style:none;font-size:.92rem}
+  ul.checks li{padding:7px 0 7px 28px;position:relative}
+  ul.checks li::before{content:"✔";position:absolute;left:0;color:var(--ok);font-weight:900}
+  .modelo-box ul.checks li::before{color:var(--dorado)}
+  .nota{background:#FFF6E0;border-left:5px solid var(--dorado);border-radius:10px;padding:12px;margin-top:12px;font-size:.88rem}
+
+  /* tabla tecnico */
+  table{width:100%;border-collapse:collapse;font-size:.86rem;border-radius:12px;overflow:hidden}
+  th{background:var(--azul);color:#fff;padding:10px;text-align:left}
+  td{padding:10px;border-bottom:1px solid #dde6ef;vertical-align:top}
+  tr:nth-child(even) td{background:#F2F7FD}
+  td b{color:var(--azul-med)}
+
+  /* stepper (diagrama de flujo) */
+  .stepper{position:relative;margin-top:6px}
+  .sviewport{min-height:220px;display:flex;align-items:center;justify-content:center}
+  .sstep{display:none;width:100%;text-align:center;background:linear-gradient(135deg,var(--azul),var(--azul-med));color:#fff;border-radius:16px;padding:22px;font-weight:700;font-size:1rem;
+    animation:sIn .5s ease}
+  .sstep .sico{font-size:2.4rem;display:block;margin-bottom:8px}
+  .sstep.variant{background:linear-gradient(135deg,#fff,#eef3fb);color:var(--azul);border:3px solid var(--azul)}
+  .sstep.decision{border:3px dashed var(--dorado);background:#fffdf4;color:var(--azul)}
+  .sstep.start,.sstep.end{background:linear-gradient(135deg,var(--dorado),#ffcf6b);color:var(--azul)}
+  .sstep.active{display:block}
+  @keyframes sIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+  .snav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px}
+  .snav button{font-family:inherit;font-weight:800;border:none;cursor:pointer;border-radius:40px;padding:10px 20px;background:var(--azul);color:#fff;transition:.2s}
+  .snav button:hover{background:var(--azul-med);transform:translateY(-2px)}
+  .snav button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+  .snav .spos{font-weight:900;color:var(--azul)}
+  .sdots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .sdot{width:11px;height:11px;border-radius:50%;background:#c3d4e6;transition:.2s;cursor:pointer}
+  .sdot.active{background:var(--dorado);transform:scale(1.35)}
+
+  /* tabs beneficios/desafios */
+  .tabhead{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .tabbtn{font-family:inherit;font-weight:800;border:2px solid var(--azul);background:#fff;color:var(--azul);border-radius:40px;padding:9px 20px;cursor:pointer;transition:.2s}
+  .tabbtn.active{background:var(--azul);color:#fff}
+  .tabpanel{display:none;animation:fade .4s ease}
+  .tabpanel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .item{border-radius:12px;padding:14px;margin-bottom:10px;font-size:.9rem}
+  .item b{display:block;margin-bottom:4px}
+  .ben{background:#E8F6EE;border-left:5px solid var(--ok)}
+  .des{background:#FBEFF0;border-left:5px solid var(--warn)}
+  .bd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:640px){.bd-grid{grid-template-columns:1fr}}
+
+  /* flip cards herramientas */
+  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:6px}
+  .flipcard{perspective:1100px;height:190px;cursor:pointer}
+  .flipinner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s}
+  .flipcard.flipped .flipinner{transform:rotateY(180deg)}
+  .flipfront,.flipback{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.86rem}
+  .flipfront{background:linear-gradient(140deg,var(--azul),var(--azul-med));color:#fff}
+  .flipfront .ico{font-size:2.3rem;margin-bottom:8px;animation:floaty 4s ease-in-out infinite}
+  .flipfront b{font-size:1.02rem}
+  .flipfront .tap{position:absolute;bottom:10px;font-size:.68rem;opacity:.8;letter-spacing:1px}
+  .flipback{background:var(--dorado);color:var(--azul);transform:rotateY(180deg);font-weight:600}
+  .flipback b{display:block;margin-bottom:6px;font-size:1rem}
+
+  /* referencias */
+  .refs{list-style:none;font-size:.85rem}
+  .refs li{margin-bottom:10px;background:#F4F8FC;border-left:4px solid var(--azul-med);border-radius:8px;padding:10px 12px;transition:.2s}
+  .refs li:hover{background:#eaf2fb;transform:translateX(6px)}
+  .refs li::before{content:"📄 ";}
+
+  .chip{display:inline-block;margin-top:10px;background:var(--azul);color:#fff;font-weight:800;font-size:.72rem;padding:5px 12px;border-radius:30px;letter-spacing:.5px}
+
+  /* rail lateral de progreso */
+  .rail{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:15px;align-items:center}
+  .rail a{width:15px;height:15px;border-radius:50%;background:#fff;border:2.5px solid var(--azul);position:relative;transition:.25s}
+  .rail a:hover{transform:scale(1.25)}
+  .rail a.active{background:var(--dorado);border-color:var(--dorado);transform:scale(1.45);box-shadow:0 0 0 5px rgba(245,168,0,.25)}
+  .rail a span{position:absolute;right:26px;top:50%;transform:translateY(-50%);background:var(--azul);color:#fff;font-size:.66rem;font-weight:700;padding:4px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}
+  .rail a:hover span{opacity:1}
+  @media(max-width:820px){.rail{display:none}}
+
+  footer{background:linear-gradient(140deg,#001d42,#002D62);color:#fff;text-align:center;padding:38px 20px;font-size:.88rem;margin-top:70px}
+  footer b{color:var(--dorado)}
 
   @media(max-width:820px){
-    .tl{overflow-x:auto;justify-content:flex-start;gap:0}
-    .tl-trackbase{min-width:820px;flex:none}
+    .tl-track,.tl-fill{left:26px;transform:none}
+    .mnode{left:26px;top:6px;transform:translate(-50%,0);width:54px;height:54px;font-size:1.1rem}
+    .mitem .mcard{width:calc(100% - 62px);margin-left:62px !important}
+    .mdecor{display:none}
+    .wrap{padding-top:60px}
   }
-
-  main{max-width:1000px;margin:0 auto;padding:24px 16px 60px}
-  section{background:#fff;border-radius:14px;padding:26px;margin:22px 0;box-shadow:0 3px 10px rgba(0,45,98,.08);scroll-margin-top:110px}
-
-  /* animación de entrada al hacer scroll */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.visible{opacity:1;transform:none}
-
-  h2{color:var(--utb-azul);border-left:6px solid var(--utb-dorado);padding-left:12px;margin-bottom:14px;font-size:1.35rem;display:flex;align-items:center;gap:10px}
-  h2 .ml{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--utb-azul);color:var(--utb-dorado);
-    display:inline-flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800}
-  .tag{display:inline-block;background:var(--utb-dorado);color:var(--utb-azul);font-weight:700;border-radius:20px;padding:3px 14px;font-size:.75rem;margin:2px}
-  /* comparación */
-  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:720px){.duo{grid-template-columns:1fr}}
-  .card{border-radius:12px;padding:18px}
-  .antes{background:#FBEFEF;border-top:5px solid var(--warn)}
-  .despues{background:#EDF7F1;border-top:5px solid var(--ok)}
-  .card h3{font-size:1rem;margin-bottom:8px}
-  /* modelo */
-  .modelo-box{background:linear-gradient(135deg,var(--utb-azul),var(--utb-azul-med));color:#fff;border-radius:12px;padding:22px;margin-bottom:16px}
-  .modelo-box b{color:var(--utb-dorado)}
-  ul.checks{list-style:none}
-  ul.checks li{padding:7px 0 7px 30px;position:relative}
-  ul.checks li::before{content:"✔";position:absolute;left:0;color:var(--utb-ok,var(--ok));font-weight:bold}
-  .modelo-box ul.checks li::before{color:var(--utb-dorado)}
-  /* tabla técnica */
-  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem}
-  th{background:var(--utb-azul);color:#fff;padding:10px;text-align:left}
-  td{padding:10px;border-bottom:1px solid #dde6ef;vertical-align:top}
-  tr:nth-child(even) td{background:#F4F8FC}
-  td b{color:var(--utb-azul-med)}
-  /* diagrama de flujo */
-  .flow{display:flex;flex-direction:column;align-items:center;gap:4px}
-  .fnode{background:#fff;border:3px solid var(--utb-azul);border-radius:10px;padding:12px 20px;max-width:560px;text-align:center;font-weight:600;color:var(--utb-azul)}
-  .fstart{border-radius:40px;background:var(--utb-azul);color:#fff}
-  .fdecision{border-style:dashed;border-color:var(--utb-dorado)}
-  .fend{border-radius:40px;background:var(--utb-dorado);color:var(--utb-azul)}
-  .arrow{color:var(--utb-azul-med);font-size:1.4rem;line-height:1}
-  .flooptag{font-size:.75rem;color:var(--warn);font-weight:700}
-  /* beneficios / desafios */
-  .bd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:720px){.bd{grid-template-columns:1fr}}
-  .bd .col h3{margin-bottom:10px;text-align:center}
-  .item{border-radius:10px;padding:14px;margin-bottom:10px;font-size:.92rem}
-  .item b{display:block;margin-bottom:4px}
-  .ben{background:#EDF7F1;border-left:5px solid var(--ok)}
-  .des{background:#FBEFEF;border-left:5px solid var(--warn)}
-  /* herramientas */
-  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-  .tool{background:var(--utb-claro);border:2px solid var(--utb-azul-med);border-radius:10px;padding:14px}
-  .tool b{color:var(--utb-azul)}
-  .nota{background:#FFF7E6;border-left:5px solid var(--utb-dorado);border-radius:8px;padding:12px;margin-top:14px;font-size:.9rem}
-  /* referencias */
-  .refs{font-size:.88rem;padding-left:34px;text-indent:-34px;list-style:none}
-  .refs li{margin-bottom:10px}
-  footer{background:var(--utb-azul);color:#fff;text-align:center;padding:20px;font-size:.85rem}
-  footer b{color:var(--utb-dorado)}
 </style>
 </head>
 <body>
+<div class="bg"></div>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div class="spark" style="top:18%;left:6%">✨</div>
+<div class="spark" style="top:64%;left:12%;animation-delay:-2s">⭐</div>
+<div class="spark" style="top:30%;right:8%;animation-delay:-3s">✨</div>
+<div class="spark" style="bottom:16%;right:5%;animation-delay:-4s">💫</div>
 
-<div id="progressbar"></div>
-
+<!-- ============ HERO ============ -->
 <header>
-  <div class="kicker">Maestría en Educación Mediada por las TIC · UTB · Grupo 01</div>
-  <h1>🤖 Del texto único al aula multinivel</h1>
-  <p>Transformación del <b>acceso a los materiales educativos</b> mediante un modelo de <b>aprendizaje profundo (IA generativa de OpenAI)</b> para la generación de versiones diferenciadas según el nivel lector de cada estudiante.</p>
-  <div class="tags"><span class="tag">Maritza Jiménez Saldarriaga</span> <span class="tag">Betty Esperanza Lagos Quintero</span> <span class="tag">Yessica Márquez Núñez</span></div>
+  <div class="halo"></div><div class="halo2"></div>
+  <div class="hfloat hf1">🤖</div><div class="hfloat hf2">📚</div>
+  <div class="hfloat hf3">🧠</div><div class="hfloat hf4">✨</div>
+  <span class="kicker">Maestría en Educación Mediada por las TIC · UTB · Grupo 01</span>
+  <h1>Del texto único al <span class="grad">aula multinivel</span></h1>
+  <p class="sub">Un recorrido interactivo por la <b>transformación del acceso a los materiales educativos</b> mediante un modelo de <b>aprendizaje profundo (IA generativa de OpenAI)</b> que genera versiones diferenciadas según el nivel lector de cada estudiante.</p>
+  <div class="tags">
+    <span class="tag">Maritza Jiménez Saldarriaga</span>
+    <span class="tag">Betty Esperanza Lagos Quintero</span>
+    <span class="tag">Yessica Márquez Núñez</span>
+  </div>
+  <div class="scroll-hint"><div class="mouse"></div>Desplázate para iniciar el recorrido</div>
 </header>
 
-<!-- LÍNEA DEL TIEMPO INTERACTIVA: los botones del menú son los nodos -->
-<div class="timeline-wrap">
-  <div class="tl">
-    <div class="tl-trackbase" id="tltrack">
-      <div class="tl-progress" id="tlprogress"></div>
+<!-- ============ LÍNEA DEL TIEMPO ============ -->
+<div class="wrap" id="inicio">
+  <div class="tl-label-head"><small>Recorrido interactivo</small>La ruta de la transformación</div>
 
-      <a class="tl-node active" href="#escenario"><span class="tl-dot">1</span><span class="tl-label">Escenario</span></a>
-      <div class="tl-seg">
-        <svg class="a-float" width="26" height="26" viewBox="0 0 24 24" fill="var(--utb-dorado)"><path d="M12 2 2 7l4 2v5c0 4.4 2.7 6.7 6 8 3.3-1.3 6-3.6 6-8V9l4-2-10-5z"/><path fill="#fff" d="M12 4.4 5.3 7.5 12 10.6l6.7-3.1L12 4.4z"/></svg>
+  <!-- rail lateral -->
+  <nav class="rail" id="rail"></nav>
+
+  <div class="timeline" id="timeline">
+    <div class="tl-track"></div>
+    <div class="tl-fill" id="tlfill"></div>
+
+    <!-- 1 ESCENARIO -->
+    <div class="mitem" id="sec-escenario">
+      <div class="mnode pulse">1<span class="mi">🏫</span></div>
+      <div class="mcard side-left"><div class="mdecor">🏫</div>
+        <div class="gcard">
+          <h3>El escenario: acceso a materiales</h3>
+          <div class="duo">
+            <div class="card antes"><h4>🏫 Situación tradicional</h4><p>El docente elabora <b>un único material</b> ("talla única") para todos. Los lectores de nivel bajo se frustran ante textos complejos; los avanzados pierden interés ante textos sencillos. Adaptar cada versión consume <b>horas de preparación</b>.</p></div>
+            <div class="card despues"><h4>✨ Transformación con IA</h4><p>Un modelo de <b>aprendizaje profundo</b> genera, desde una única fuente, <b>versiones multinivel</b> (inicial, intermedia y avanzada) con el mismo propósito de aprendizaje. El docente <b>revisa y valida</b> antes de publicar.</p></div>
+          </div>
+          <span class="chip">Etapa de partida</span>
+        </div>
       </div>
-
-      <a class="tl-node" href="#modelo"><span class="tl-dot">2</span><span class="tl-label">Modelo de IA</span></a>
-      <div class="tl-seg">
-        <svg class="a-spin" width="26" height="26" viewBox="0 0 24 24" fill="var(--utb-dorado)"><path d="M12 2c2.2 0 4 1.8 4 4v.2A4 4 0 0 1 12 6a4 4 0 0 1-4 4V8a2 2 0 0 1 4-2 2 2 0 0 0 2-2c0-1.1-.9-2-2-2z"/></svg>
-      </div>
-
-      <a class="tl-node" href="#tecnico"><span class="tl-dot">3</span><span class="tl-label">Diseño técnico</span></a>
-      <div class="tl-seg">
-        <svg class="a-spin" width="26" height="26" viewBox="0 0 24 24" fill="var(--utb-azul-med)"><path d="M12 8c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
-      </div>
-
-      <a class="tl-node" href="#flujo"><span class="tl-dot">4</span><span class="tl-label">Diagrama flujo</span></a>
-      <div class="tl-seg">
-        <svg class="a-float" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--utb-dorado)" stroke-width="2.4"><path d="M3 17h14M17 17l-3-3M17 17l-3 3M20 7H6M6 7l3-3M6 7l3 3"/></svg>
-      </div>
-
-      <a class="tl-node" href="#impacto"><span class="tl-dot">5</span><span class="tl-label">Beneficios</span></a>
-      <div class="tl-seg">
-        <svg class="a-pulse" width="26" height="26" viewBox="0 0 24 24" fill="var(--ok)"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-      </div>
-
-      <a class="tl-node" href="#herramientas"><span class="tl-dot">6</span><span class="tl-label">Herramientas</span></a>
-      <div class="tl-seg">
-        <svg class="a-float" width="26" height="26" viewBox="0 0 24 24" fill="var(--utb-azul-med)"><path d="M13 3 22 12l-6 6-1.5-1.5 4.5-4.5-5-5L7 7l-1-1L13 3zM2 20l4-4 2 2-4 4-2-2z"/></svg>
-      </div>
-
-      <a class="tl-node" href="#refs"><span class="tl-dot">7</span><span class="tl-label">Referencias</span></a>
-
     </div>
+
+    <!-- 2 MODELO -->
+    <div class="mitem" id="sec-modelo">
+      <div class="mnode pulse">2<span class="mi">🧠</span></div>
+      <div class="mcard side-right"><div class="mdecor">🧠</div>
+        <div class="gcard">
+          <h3>Modelo de IA y su fundamentación</h3>
+          <div class="modelo-box">
+            <h4 style="margin-bottom:8px">Aprendizaje profundo — Modelos de lenguaje de gran escala (LLM)</h4>
+            <p style="font-size:.92rem">La familia de modelos <b>GPT de OpenAI</b> (p. ej., GPT-4o), arquitectura de <b>redes neuronales Transformer</b> entrenadas sobre enormes corpus mediante el mecanismo de atención.</p>
+            <ul class="checks">
+              <li><b>Funcionamiento:</b> aprende representaciones estadísticas del lenguaje (tokenización → codificación → predicción) y, con prompts del docente, <b>reescribe, simplifica o enriquece textos</b>.</li>
+              <li><b>Responde a la necesidad:</b> no es un problema supervisado ni no supervisado, sino de <b>generación de lenguaje natural</b>: la fortaleza del aprendizaje profundo con Transformers.</li>
+              <li><b>Sustenta la transformación:</b> multiplica la diferenciación — de 1 versión a 3 o más niveles con el mismo contenido — habilitando el aula multinivel inclusiva.</li>
+            </ul>
+          </div>
+          <div class="nota">⚠️ <b>Modelo ≠ Herramienta:</b> el <b>modelo</b> es el motor que "aprende" (GPT, red Transformer de OpenAI); las <b>herramientas</b> (MagicSchool AI, Diffit, ChatGPT web) son <b>aplicaciones que consumen ese modelo</b>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 TÉCNICO -->
+    <div class="mitem" id="sec-tecnico">
+      <div class="mnode pulse">3<span class="mi">⚙️</span></div>
+      <div class="mcard side-left"><div class="mdecor">⚙️</div>
+        <div class="gcard">
+          <h3>Diseño técnico-pedagógico</h3>
+          <table>
+            <tr><th>Componente</th><th>¿Cómo opera en la propuesta?</th></tr>
+            <tr><td><b>📥 Entrada de datos</b></td><td>El docente ingresa el texto fuente y los <b>parámetros de adaptación</b>: nivel lector, longitud, vocabulario y condiciones particulares (p. ej., apoyos PIAR).</td></tr>
+            <tr><td><b>⚙️ Procesamiento (IA)</b></td><td>El Transformer <b>tokeniza</b>, analiza estructura semántica y sintáctica, y <b>genera las versiones</b> simplificada/intermedia/avanzada mediante PLN.</td></tr>
+            <tr><td><b>📤 Salida de datos</b></td><td>Borradores de las tres versiones + vocabulario y preguntas de comprensión, exportables (PDF/DOCX).</td></tr>
+            <tr><td><b>🤝 Interacción</b></td><td>El docente <b>revisa, corrige y valida</b> (supervisión humana); los estudiantes reciben la versión según su nivel por el canal habitual.</td></tr>
+          </table>
+          <div class="nota">💡 <b>Propósito educativo articulado:</b> la validación humana no es accesoria — es el principio ético central (UNESCO, 2023): la IA <b>asiste</b>, la decisión pedagógica sigue siendo del docente.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 FLUJO -->
+    <div class="mitem" id="sec-flujo">
+      <div class="mnode pulse">4<span class="mi">🔀</span></div>
+      <div class="mcard side-right"><div class="mdecor">🔀</div>
+        <div class="gcard">
+          <h3>Diagrama de flujo del proceso</h3>
+          <div class="stepper" id="flowstepper">
+            <div class="sviewport">
+              <div class="sstep start active"><span class="sico">▶</span>INICIO: el docente selecciona el texto curricular fuente</div>
+              <div class="sstep"><span class="sico">📥</span>Entrada: define niveles lectores, longitud, vocabulario y condiciones (prompt en la herramienta)</div>
+              <div class="sstep"><span class="sico">⚙️</span>Procesamiento IA (modelo GPT): tokenización → análisis semántico → generación de versiones multinivel</div>
+              <div class="sstep"><span class="sico">📤</span>Salida: borradores de las 3 versiones + preguntas de comprensión por nivel</div>
+              <div class="sstep decision"><span class="sico">◆</span>¿Las versiones son pedagógicamente pertinentes?</div>
+              <div class="sstep"><span class="sico">🤝</span>Sí → Interacción: el docente publica; los estudiantes acceden por su nivel</div>
+              <div class="sstep end"><span class="sico">■</span>FIN: aula multinivel con contenido validado</div>
+              <div class="sstep variant"><span class="sico">↺</span>No → vuelve a Entrada: el docente ajusta el prompt y regenera</div>
+            </div>
+            <div class="sdots" id="sdotss"></div>
+            <div class="snav">
+              <button id="sprev" type="button">◀ Anterior</button>
+              <span class="spos" id="spos">1 / 8</span>
+              <button id="snext" type="button">Siguiente ▶</button>
+            </div>
+          </div>
+          <div class="nota" style="margin-top:14px">🛠️ <b>Herramientas que soportan el flujo:</b> ChatGPT (OpenAI) y MagicSchool AI para la generación; Diffit para adaptación por nivel lector; Google Classroom para la distribución.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 IMPACTO -->
+    <div class="mitem" id="sec-impacto">
+      <div class="mnode pulse">5<span class="mi">⚖️</span></div>
+      <div class="mcard side-left"><div class="mdecor">⚖️</div>
+        <div class="gcard">
+          <h3>Beneficios y desafíos de la propuesta</h3>
+          <div class="tabhead">
+            <button class="tabbtn active" data-tab="ben">✅ Beneficios</button>
+            <button class="tabbtn" data-tab="des">⚠️ Desafíos</button>
+          </div>
+          <div class="tabpanel active" id="tab-ben">
+            <div class="bd-grid">
+              <div class="item ben"><b>1. Ahorro de tiempo docente</b>Reduce de horas a minutos la preparación de materiales diferenciados, liberando tiempo para el acompañamiento y la retroalimentación.</div>
+              <div class="item ben"><b>2. Inclusión y equidad en el aula</b>Todos trabajan el <b>mismo contenido</b> con andamiajes distintos: apoya los ajustes razonables (PIAR) y el DUA.</div>
+              <div class="item ben"><b>3. Decisión pedagógica informada</b>Las versiones por nivel dan un mapa claro del rango lector del grupo, apoyando la planificación por desempeños.</div>
+            </div>
+          </div>
+          <div class="tabpanel" id="tab-des">
+            <div class="bd-grid">
+              <div class="item des"><b>1. Sesgos y errores de contenido</b>El modelo puede generar imprecisiones o sesgos; exige <b>validación humana obligatoria</b> y alfabetización crítica del docente.</div>
+              <div class="item des"><b>2. Brecha tecnológica y de conectividad</b>Sin internet ni dispositivos el beneficio no llega a todos; exige estrategias híbridas (impresión de versiones).</div>
+              <div class="item des"><b>3. Privacidad, datos y derechos de autor</b>Al ingresar datos de estudiantes a plataformas comerciales se compromete la confidencialidad; solo contenidos anónimos y cuentas institucionales (Rodríguez, 2024; UNESCO, 2023).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 HERRAMIENTAS -->
+    <div class="mitem" id="sec-herramientas">
+      <div class="mnode pulse">6<span class="mi">🛠️</span></div>
+      <div class="mcard side-right"><div class="mdecor">🛠️</div>
+        <div class="gcard">
+          <h3>Herramientas de IA que apoyan la implementación</h3>
+          <p style="font-size:.88rem;margin-bottom:10px">Estas plataformas <b>consumen el modelo de aprendizaje profundo</b> (GPT) y lo traducen a funciones educativas listas para el aula. <b>Toca cada tarjeta</b> para descubrir más.</p>
+          <div class="tools">
+            <div class="flipcard"><div class="flipinner">
+              <div class="flipfront"><span class="ico">🤖</span><b>ChatGPT (OpenAI)</b><span class="tap">👆 toca para ver</span></div>
+              <div class="flipback"><b>Acceso directo al modelo GPT</b>El docente controla la generación mediante prompts especializados (Gómez &amp; García-Brustenga, 2023).</div>
+            </div></div>
+            <div class="flipcard"><div class="flipinner">
+              <div class="flipfront"><span class="ico">🪄</span><b>MagicSchool AI</b><span class="tap">👆 toca para ver</span></div>
+              <div class="flipback"><b>Asistentes educativos preconfigurados</b>Simplificación de textos, generación de preguntas y adaptación por nivel.</div>
+            </div></div>
+            <div class="flipcard"><div class="flipinner">
+              <div class="flipfront"><span class="ico">📚</span><b>Diffit</b><span class="tap">👆 toca para ver</span></div>
+              <div class="flipback"><b>Adapta cualquier texto</b>A un nivel lector específico y añade vocabulario y preguntas de comprensión.</div>
+            </div></div>
+            <div class="flipcard"><div class="flipinner">
+              <div class="flipfront"><span class="ico">📖</span><b>Newsela</b><span class="tap">👆 toca para ver</span></div>
+              <div class="flipback"><b>Biblioteca de textos periodísticos</b>En múltiples niveles de lectura: referencia de lo que logramos automatizar.</div>
+            </div></div>
+          </div>
+          <span class="chip" style="margin-top:12px">Interactúa con las tarjetas</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 REFERENCIAS -->
+    <div class="mitem" id="sec-refs">
+      <div class="mnode pulse">7<span class="mi">📚</span></div>
+      <div class="mcard side-left"><div class="mdecor">📚</div>
+        <div class="gcard">
+          <h3>Referencias (APA 7ª ed.)</h3>
+          <ul class="refs">
+            <li>Gómez D., F., &amp; García-Brustenga, G. (2023). <i>Prompts de utilidad para el profesorado para utilizar IA generativa</i>. Universitat Oberta de Catalunya, eLearning Innovation Center. https://openaccess.uoc.edu/handle/10609/147885</li>
+            <li>López Rosique, R. (2022). <i>Taller de IA para Educación Secundaria: divulgación, motivación y desarrollo</i>. Universitat Politècnica de València, 20–35.</li>
+            <li>Rodríguez, H. (2024). Hacia una ética sustentable con la Inteligencia Artificial en la investigación. <i>Cuadernos Latinoamericanos de Administración, 20</i>(38).</li>
+            <li>Silvina, I., Unzaga, E., &amp; Álvarez, M. (2024). Inteligencia Artificial en Ambientes de Aprendizaje Ubicuo: una revisión sistemática de literatura. <i>Revista Iberoamericana de Tecnología en Educación y Educación en Tecnología, 37</i>.</li>
+            <li>UNESCO. (2023). <i>El uso de la IA en la educación: decidir el futuro que queremos</i>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura. https://www.unesco.org/es/articles/el-uso-de-la-ia-en-la-educacion-decidir-el-futuro-que-queremos</li>
+            <li>Vázquez, F., &amp; Ramírez, R. (2024). Inteligencia Artificial en la academia: oportunidades y desafíos. <i>RECIBE, 13</i>(2).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<main>
-
-<section id="escenario" class="reveal">
-  <h2><span class="ml">1</span> El escenario: acceso a materiales educativos</h2>
-  <div class="duo">
-    <div class="card antes">
-      <h3>🏫 Situación tradicional</h3>
-      <p>El docente elabora <b>un único material</b> ("talla única") para todos los estudiantes. Los lectores con nivel bajo se frustran ante textos muy complejos; los avanzados pierden interés ante textos muy sencillos. Adaptar manualmente cada versión consume <b>horas de preparación</b> que compiten con el tiempo pedagógico.</p>
-    </div>
-    <div class="card despues">
-      <h3>✨ Transformación con IA</h3>
-      <p>Un modelo de <b>aprendizaje profundo</b> genera, a partir de una única fuente, <b>versiones multinivel</b> del mismo contenido (inicial, intermedio y avanzado) con el mismo propósito de aprendizaje. El docente <b>revisa y valida</b> cada versión antes de publicarla, garantizando la pertinencia pedagógica y el respeto por la diversidad del aula.</p>
-    </div>
-  </div>
-</section>
-
-<section id="modelo" class="reveal">
-  <h2><span class="ml">2</span> Modelo de IA seleccionado y su fundamentación</h2>
-  <div class="modelo-box">
-    <h3 style="margin-bottom:8px">🧠 Aprendizaje profundo — Modelos de lenguaje de gran escala (LLM)</h3>
-    <p>Selección concreta: la familia de modelos <b>GPT de OpenAI</b> (p. ej., GPT-4o), arquitectura de <b>redes neuronales Transformer</b> entrenadas sobre enormes corpus de texto mediante el mecanismo de atención.</p>
-    <ul class="checks">
-      <li><b>Funcionamiento:</b> aprende representaciones estadísticas del lenguaje (tokenización → codificación → predicción de la siguiente unidad) y, con instrucciones del docente (prompts), <b>reescribe, simplifica o enriquece textos</b> manteniendo el sentido.</li>
-      <li><b>Responde a la necesidad:</b> el problema del escenario no es de datos etiquetados (supervisado) ni de agrupación de patrones (no supervisado), sino de <b>generación y adaptación de lenguaje natural</b>: exactamente la fortaleza del aprendizaje profundo con Transformers.</li>
-      <li><b>Sustenta la transformación:</b> multiplica la capacidad de diferenciación del docente — de 1 versión única a 3 o más niveles con el mismo contenido curricular — habilitando un aula multinivel inclusiva.</li>
-    </ul>
-  </div>
-  <div class="nota">⚠️ <b>Modelo ≠ Herramienta:</b> el <b>modelo</b> es el motor que "aprende" (GPT, red Transformer de OpenAI). Las <b>herramientas</b> (MagicSchool AI, Diffit, ChatGPT web) son <b>aplicaciones que consumen ese modelo</b> y lo ponen al servicio del docente con interfaces y funciones educativas. Confundirlos es el error conceptual más frecuente en esta actividad.</div>
-</section>
-
-<section id="tecnico" class="reveal">
-  <h2><span class="ml">3</span> Diseño técnico-pedagógico de la transformación</h2>
-  <table>
-    <tr><th>Componente</th><th>¿Cómo opera en la propuesta?</th></tr>
-    <tr><td><b>📥 Entrada de datos</b></td><td>El docente ingresa el texto fuente (guía, lectura curricular) y los <b>parámetros de adaptación</b>: nivel lector de cada grupo, longitud, vocabulario objetivo y condiciones particulares (p. ej., apoyos para estudiantes con PIAR).</td></tr>
-    <tr><td><b>⚙️ Procesamiento (IA)</b></td><td>El modelo Transformer <b>tokeniza</b> el texto, analiza estructura semántica y sintáctica, y <b>genera las versiones</b> simplificada/intermedia/avanzada mediante PLN, conservando los conceptos clave del currículo y ajustando complejidad léxica y sintáctica.</td></tr>
-    <tr><td><b>📤 Salida de datos</b></td><td>Borradores de las tres versiones + sugerencias de vocabulario y preguntas de comprensión por nivel, presentados en formato lista o documento exportable (PDF/DOCX).</td></tr>
-    <tr><td><b>🤝 Interacción</b></td><td>El docente <b>revisa, corrige y valida</b> (supervisión humana) desde la plataforma o herramienta web; los estudiantes reciben la versión asignada a su nivel por el canal habitual (aula virtual, impreso o proyección).</td></tr>
-  </table>
-  <div class="nota">💡 <b>Propósito educativo articulado:</b> la validación humana no es un paso accesorio — es el principio ético central (UNESCO, 2023): la IA <b>asiste</b>, la decisión pedagógica sigue siendo del docente.</div>
-</section>
-
-<section id="flujo" class="reveal">
-  <h2><span class="ml">4</span> Diagrama de flujo del nuevo proceso</h2>
-  <div class="flow">
-    <div class="fnode fstart">▶ INICIO: docente selecciona el texto curricular fuente</div>
-    <div class="arrow">↓</div>
-    <div class="fnode">📥 Entrada: define niveles lectores, longitud, vocabulario y condiciones (prompt en la herramienta)</div>
-    <div class="arrow">↓</div>
-    <div class="fnode">⚙️ Procesamiento IA (modelo GPT – aprendizaje profundo): tokenización → análisis semántico → generación de versiones multinivel</div>
-    <div class="arrow">↓</div>
-    <div class="fnode">📤 Salida: borradores de las 3 versiones + preguntas de comprensión por nivel</div>
-    <div class="arrow">↓</div>
-    <div class="fnode fdecision">◆ ¿Las versiones son pedagógicamente pertinentes?</div>
-    <div class="arrow">↓ sí</div>
-    <div class="fnode">🤝 Interacción: docente publica; estudiantes acceden por su nivel (aula virtual / impreso)</div>
-    <div class="arrow">↓</div>
-    <div class="fnode fend">■ FIN: aula multinivel con contenido validado</div>
-    <div class="flooptag" style="margin-top:6px">↺ no → vuelve al paso de Entrada: el docente ajusta el prompt y regenera</div>
-  </div>
-  <div class="nota">🛠️ <b>Herramientas que soportan el flujo:</b> ChatGPT (OpenAI) y MagicSchool AI para la generación; Diffit para adaptación por nivel lector; Google Classroom para la distribución.</div>
-</section>
-
-<section id="impacto" class="reveal">
-  <h2><span class="ml">5</span> Beneficios y desafíos de la propuesta</h2>
-  <div class="bd">
-    <div class="col">
-      <h3 style="color:var(--ok)">✅ Beneficios (viabilidad educativa)</h3>
-      <div class="item ben"><b>1. Ahorro de tiempo docente</b>Reduce de horas a minutos la preparación de materiales diferenciados, liberando tiempo para el acompañamiento directo y la retroalimentación personalizada.</div>
-      <div class="item ben"><b>2. Inclusión y equidad en el aula</b>Todos los estudiantes trabajan el <b>mismo contenido</b> con andamiajes distintos: apoya directamente los ajustes razonables (PIAR) y el Diseño Universal para el Aprendizaje.</div>
-      <div class="item ben"><b>3. Decisión pedagógica informada</b>Las versiones y sugerencias por nivel dan al docente un mapa claro del rango lector del grupo, apoyando la planificación por niveles de desempeño.</div>
-    </div>
-    <div class="col">
-      <h3 style="color:var(--warn)">⚠️ Desafíos (condiciones de implementación)</h3>
-      <div class="item des"><b>1. Sesgos y errores de contenido</b>El modelo puede generar imprecisiones o sesgos; su impacto pedagógico exige la <b>validación humana obligatoria</b> y la alfabetización crítica del docente frente a la IA.</div>
-      <div class="item des"><b>2. Brecha tecnológica y de conectividad</b>Sin internet ni dispositivos en la escuela o el hogar, el beneficio no llega a todos; exige estrategias híbridas (impresión de las versiones generadas).</div>
-      <div class="item des"><b>3. Privacidad, datos y derechos de autor</b>Ingresar datos personales de estudiantes a plataformas comerciales compromete la confidencialidad; solo deben usarse contenidos anónimos y cuentas institucionales. Además, usar contenidos de terceros para generar adaptaciones plantea dudas de derechos de autor (Rodríguez, 2024; UNESCO, 2023).</div>
-    </div>
-  </div>
-</section>
-
-<section id="herramientas" class="reveal">
-  <h2><span class="ml">6</span> Herramientas de IA que apoyan la implementación</h2>
-  <p style="margin-bottom:10px">Estas plataformas <b>consumen el modelo de aprendizaje profundo</b> (GPT) y lo traducen a funciones educativas listas para el aula:</p>
-  <div class="tools">
-    <div class="tool"><b>🤖 ChatGPT (OpenAI)</b>Acceso directo al modelo GPT; el docente controla la generación mediante prompts especializados (Gómez &amp; García-Brustenga, 2023).</div>
-    <div class="tool"><b>🪄 MagicSchool AI</b>Asistentes educativos preconfigurados: simplificación de textos, generación de preguntas y adaptación por nivel.</div>
-    <div class="tool"><b>📚 Diffit</b>Adapta cualquier texto a un nivel lector específico y añade vocabulario y preguntas de comprensión.</div>
-    <div class="tool"><b>📖 Newsela</b>Biblioteca de textos periodísticos en múltiples niveles de lectura, referencia de lo que logramos automatizar.</div>
-  </div>
-</section>
-
-<section id="refs" class="reveal">
-  <h2><span class="ml">7</span> Referencias (APA 7ª ed.)</h2>
-  <ul class="refs">
-    <li>Gómez D., F., &amp; García-Brustenga, G. (2023). <i>Prompts de utilidad para el profesorado para utilizar IA generativa</i>. Universitat Oberta de Catalunya, eLearning Innovation Center. https://openaccess.uoc.edu/handle/10609/147885</li>
-    <li>López Rosique, R. (2022). <i>Taller de IA para Educación Secundaria: divulgación, motivación y desarrollo</i>. Universitat Politècnica de València, 20–35.</li>
-    <li>Rodríguez, H. (2024). Hacia una ética sustentable con la Inteligencia Artificial en la investigación. <i>Cuadernos Latinoamericanos de Administración, 20</i>(38).</li>
-    <li>Silvina, I., Unzaga, E., &amp; Álvarez, M. (2024). Inteligencia Artificial en Ambientes de Aprendizaje Ubicuo: una revisión sistemática de literatura. <i>Revista Iberoamericana de Tecnología en Educación y Educación en Tecnología, 37</i>.</li>
-    <li>UNESCO. (2023). <i>El uso de la IA en la educación: decidir el futuro que queremos</i>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura. https://www.unesco.org/es/articles/el-uso-de-la-ia-en-la-educacion-decidir-el-futuro-que-queremos</li>
-    <li>Vázquez, F., &amp; Ramírez, R. (2024). Inteligencia Artificial en la academia: oportunidades y desafíos. <i>RECIBE, 13</i>(2).</li>
-  </ul>
-</section>
-
-</main>
 
 <footer>
   <b>Grupo 01</b> · Maestría en Educación Mediada por las TIC · Universidad Tecnológica de Bolívar · Actividad: Modelos de IA y su impacto en la enseñanza-aprendizaje
@@ -285,39 +377,94 @@
 
 <script>
 (function(){
-  var nodes = Array.prototype.slice.call(document.querySelectorAll('.tl-node'));
   var secs = ['escenario','modelo','tecnico','flujo','impacto','herramientas','refs'];
-  var progress = document.getElementById('tlprogress');
-  var pbar = document.getElementById('progressbar');
+  var labels = {escenario:'Escenario',modelo:'Modelo de IA',tecnico:'Diseño técnico',flujo:'Diagrama de flujo',impacto:'Beneficios y desafíos',herramientas:'Herramientas',refs:'Referencias'};
+  var mitems = document.querySelectorAll('.mitem');
+  var fill = document.getElementById('tlfill');
+  var tl = document.getElementById('timeline');
 
-  // animación de entrada de las secciones (scroll reveal)
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+  // ---- rail lateral de progreso ----
+  var rail = document.getElementById('rail');
+  secs.forEach(function(id, i){
+    var a = document.createElement('a');
+    a.href = '#sec-'+id;
+    a.setAttribute('data-i', i);
+    var sp = document.createElement('span');
+    sp.textContent = (i+1)+'. '+labels[id];
+    a.appendChild(sp);
+    rail.appendChild(a);
+  });
+  var railDots = Array.prototype.slice.call(rail.querySelectorAll('a'));
+
+  // ---- reveal de milestones ----
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); }
     });
-  }, {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(function(s){ io.observe(s); });
+  }, {threshold:0.16});
+  mitems.forEach(function(m){ io.observe(m); });
 
-  // scroll-spy + progreso de la línea del tiempo
+  // ---- scroll: rellenar línea + rail activo ----
   function onScroll(){
-    var sy = window.pageYOffset;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = max > 0 ? (sy / max) * 100 : 0;
-    pbar.style.width = pct + '%';
-    progress.style.width = pct + '%';
-    // sección activa
-    var mid = sy + window.innerHeight * 0.35;
+    var r = tl.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var done = (vh*0.55) - r.top;
+    var ratio = Math.max(0, Math.min(1, done / tl.offsetHeight));
+    fill.style.height = (ratio*100)+'%';
+    var mid = window.pageYOffset + vh*0.45;
     var active = 0;
     for(var i=0;i<secs.length;i++){
-      var el = document.getElementById(secs[i]);
-      if(el && el.offsetTop <= mid){ active = i; }
+      var el = document.getElementById('sec-'+secs[i]);
+      if(el && el.offsetTop+80 <= mid) active = i;
     }
-    nodes.forEach(function(n,idx){ n.classList.toggle('active', idx===active); });
+    railDots.forEach(function(d,idx){ d.classList.toggle('active', idx===active); });
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
+
+  // ---- stepper de flujo ----
+  (function(){
+    var steps = Array.prototype.slice.call(document.querySelectorAll('#flowstepper .sstep'));
+    var dots = document.getElementById('sdotss');
+    var pos = document.getElementById('spos');
+    var cur = 0;
+    steps.forEach(function(s, i){
+      var d = document.createElement('span');
+      d.className = (i===cur) ? 'sdot active' : 'sdot';
+      d.addEventListener('click', function(){ go(i); });
+      dots.appendChild(d);
+    });
+    var dotEls = Array.prototype.slice.call(dots.children);
+    function go(n){
+      steps[cur].classList.remove('active');
+      dotEls[cur].classList.remove('active');
+      cur = Math.max(0, Math.min(steps.length-1, n));
+      steps[cur].classList.add('active');
+      dotEls[cur].classList.add('active');
+      pos.textContent = (cur+1)+' / '+steps.length;
+      document.getElementById('sprev').disabled = (cur===0);
+      document.getElementById('snext').disabled = (cur===steps.length-1);
+    }
+    document.getElementById('sprev').addEventListener('click', function(){ go(cur-1); });
+    document.getElementById('snext').addEventListener('click', function(){ go(cur+1); });
+    go(0);
+  })();
+
+  // ---- tabs beneficios/desafios ----
+  document.querySelectorAll('.tabbtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tabbtn').forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.tabpanel').forEach(function(p){ p.classList.remove('active'); });
+      b.classList.add('active');
+      document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---- flip cards herramientas ----
+  document.querySelectorAll('.flipcard').forEach(function(c){
+    c.addEventListener('click', function(){ c.classList.toggle('flipped'); });
+  });
 })();
 </script>
-
 </body>
 </html>
