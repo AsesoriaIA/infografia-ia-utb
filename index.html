@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA en el Aula · Acceso a Materiales Educativos — Grupo 01 · UTB</title>
+<style>
+  :root{
+    --utb-azul:#002D62;      /* azul institucional UTB */
+    --utb-azul-med:#00539F;
+    --utb-dorado:#F5A800;    /* dorado UTB */
+    --utb-claro:#EAF1F8;
+    --utb-blanco:#FFFFFF;
+    --ok:#1F8A4C; --warn:#C0392B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Verdana,Arial,sans-serif;background:var(--utb-claro);color:#1a2333;line-height:1.55}
+  header{background:linear-gradient(135deg,var(--utb-azul) 60%,var(--utb-azul-med));color:#fff;text-align:center;padding:38px 20px 30px}
+  header .kicker{color:var(--utb-dorado);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.8rem}
+  header h1{font-size:1.9rem;margin:10px 0 6px}
+  header p{opacity:.9;max-width:760px;margin:0 auto}
+  nav{position:sticky;top:0;background:var(--utb-azul);display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:8px;z-index:50}
+  nav a{color:#fff;text-decoration:none;font-size:.78rem;padding:7px 12px;border-radius:20px}
+  nav a:hover{background:var(--utb-dorado);color:var(--utb-azul)}
+  main{max-width:1000px;margin:0 auto;padding:24px 16px 60px}
+  section{background:#fff;border-radius:14px;padding:26px;margin:22px 0;box-shadow:0 3px 10px rgba(0,45,98,.08);scroll-margin-top:70px}
+  h2{color:var(--utb-azul);border-left:6px solid var(--utb-dorado);padding-left:12px;margin-bottom:14px;font-size:1.35rem}
+  .tag{display:inline-block;background:var(--utb-dorado);color:var(--utb-azul);font-weight:700;border-radius:20px;padding:3px 14px;font-size:.75rem;margin:2px}
+  /* comparación */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.duo{grid-template-columns:1fr}}
+  .card{border-radius:12px;padding:18px}
+  .antes{background:#FBEFEF;border-top:5px solid var(--warn)}
+  .despues{background:#EDF7F1;border-top:5px solid var(--ok)}
+  .card h3{font-size:1rem;margin-bottom:8px}
+  /* modelo */
+  .modelo-box{background:linear-gradient(135deg,var(--utb-azul),var(--utb-azul-med));color:#fff;border-radius:12px;padding:22px;margin-bottom:16px}
+  .modelo-box b{color:var(--utb-dorado)}
+  ul.checks{list-style:none}
+  ul.checks li{padding:7px 0 7px 30px;position:relative}
+  ul.checks li::before{content:"✔";position:absolute;left:0;color:var(--utb-ok,var(--ok));font-weight:bold}
+  .modelo-box ul.checks li::before{color:var(--utb-dorado)}
+  /* tabla técnica */
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem}
+  th{background:var(--utb-azul);color:#fff;padding:10px;text-align:left}
+  td{padding:10px;border-bottom:1px solid #dde6ef;vertical-align:top}
+  tr:nth-child(even) td{background:#F4F8FC}
+  td b{color:var(--utb-azul-med)}
+  /* diagrama de flujo */
+  .flow{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .fnode{background:#fff;border:3px solid var(--utb-azul);border-radius:10px;padding:12px 20px;max-width:560px;text-align:center;font-weight:600;color:var(--utb-azul)}
+  .fstart{border-radius:40px;background:var(--utb-azul);color:#fff}
+  .fdecision{border-style:dashed;border-color:var(--utb-dorado)}
+  .fend{border-radius:40px;background:var(--utb-dorado);color:var(--utb-azul)}
+  .arrow{color:var(--utb-azul-med);font-size:1.4rem;line-height:1}
+  .flooptag{font-size:.75rem;color:var(--warn);font-weight:700}
+  /* beneficios / desafios */
+  .bd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.bd{grid-template-columns:1fr}}
+  .bd .col h3{margin-bottom:10px;text-align:center}
+  .item{border-radius:10px;padding:14px;margin-bottom:10px;font-size:.92rem}
+  .item b{display:block;margin-bottom:4px}
+  .ben{background:#EDF7F1;border-left:5px solid var(--ok)}
+  .des{background:#FBEFEF;border-left:5px solid var(--warn)}
+  /* herramientas */
+  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .tool{background:var(--utb-claro);border:2px solid var(--utb-azul-med);border-radius:10px;padding:14px}
+  .tool b{color:var(--utb-azul)}
+  .nota{background:#FFF7E6;border-left:5px solid var(--utb-dorado);border-radius:8px;padding:12px;margin-top:14px;font-size:.9rem}
+  /* referencias */
+  .refs{font-size:.88rem;padding-left:34px;text-indent:-34px}
+  .refs li{margin-bottom:10px}
+  footer{background:var(--utb-azul);color:#fff;text-align:center;padding:20px;font-size:.85rem}
+  footer b{color:var(--utb-dorado)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Maestría en Educación Mediada por las TIC · UTB · Grupo 01</div>
+  <h1>🤖 Del texto único al aula multinivel</h1>
+  <p>Transformación del <b>acceso a los materiales educativos</b> mediante un modelo de <b>aprendizaje profundo (IA generativa de OpenAI)</b> para la generación de versiones diferenciadas según el nivel lector de cada estudiante.</p>
+</header>
+
+<nav>
+  <a href="#escenario">Escenario</a>
+  <a href="#modelo">Modelo de IA</a>
+  <a href="#tecnico">Diseño técnico</a>
+  <a href="#flujo">Diagrama de flujo</a>
+  <a href="#impacto">Beneficios y desafíos</a>
+  <a href="#herramientas">Herramientas</a>
+  <a href="#refs">Referencias</a>
+</nav>
+
+<main>
+
+<section id="escenario">
+  <h2>1. El escenario: acceso a materiales educativos</h2>
+  <div class="duo">
+    <div class="card antes">
+      <h3>🏫 Situación tradicional</h3>
+      <p>El docente elabora <b>un único material</b> ("talla única") para todos los estudiantes. Los lectores con nivel bajo se frustran ante textos muy complejos; los avanzados pierden interés ante textos muy sencillos. Adaptar manualmente cada versión consume <b>horas de preparación</b> que compiten con el tiempo pedagógico.</p>
+    </div>
+    <div class="card despues">
+      <h3>✨ Transformación con IA</h3>
+      <p>Un modelo de <b>aprendizaje profundo</b> genera, a partir de una única fuente, <b>versiones multinivel</b> del mismo contenido (inicial, intermedio y avanzado) con el mismo propósito de aprendizaje. El docente <b>revisa y valida</b> cada versión antes de publicarla, garantizando la pertinencia pedagógica y el respeto por la diversidad del aula.</p>
+    </div>
+  </div>
+</section>
+
+<section id="modelo">
+  <h2>2. Modelo de IA seleccionado y su fundamentación</h2>
+  <div class="modelo-box">
+    <h3 style="margin-bottom:8px">🧠 Aprendizaje profundo — Modelos de lenguaje de gran escala (LLM)</h3>
+    <p>Selección concreta: la familia de modelos <b>GPT de OpenAI</b> (p. ej., GPT-4o), arquitectura de <b>redes neuronales Transformer</b> entrenadas sobre enormes corpus de texto mediante el mecanismo de atención.</p>
+    <ul class="checks">
+      <li><b>Funcionamiento:</b> aprende representaciones estadísticas del lenguaje (tokenización → codificación → predicción de la siguiente unidad) y, con instrucciones del docente (prompts), <b>reescribe, simplifica o enriquece textos</b> manteniendo el sentido.</li>
+      <li><b>Responde a la necesidad:</b> el problema del escenario no es de datos etiquetados (supervisado) ni de agrupación de patrones (no supervisado), sino de <b>generación y adaptación de lenguaje natural</b>: exactamente la fortaleza del aprendizaje profundo con Transformers.</li>
+      <li><b>Sustenta la transformación:</b> multiplica la capacidad de diferenciación del docente — de 1 versión única a 3 o más niveles con el mismo contenido curricular — habilitando un aula multinivel inclusiva.</li>
+    </ul>
+  </div>
+  <div class="nota">⚠️ <b>Modelo ≠ Herramienta:</b> el <b>modelo</b> es el motor que "aprende" (GPT, red Transformer de OpenAI). Las <b>herramientas</b> (MagicSchool AI, Diffit, ChatGPT web) son <b>aplicaciones que consumen ese modelo</b> y lo ponen al servicio del docente con interfaces y funciones educativas. Confundirlos es el error conceptual más frecuente en esta actividad.</div>
+</section>
+
+<section id="tecnico">
+  <h2>3. Diseño técnico-pedagógico de la transformación</h2>
+  <table>
+    <tr><th>Componente</th><th>¿Cómo opera en la propuesta?</th></tr>
+    <tr><td><b>📥 Entrada de datos</b></td><td>El docente ingresa el texto fuente (guía, lectura curricular) y los <b>parámetros de adaptación</b>: nivel lector de cada grupo, longitud, vocabulario objetivo y condiciones particulares (p. ej., apoyos para estudiantes con PIAR).</td></tr>
+    <tr><td><b>⚙️ Procesamiento (IA)</b></td><td>El modelo Transformer <b>tokeniza</b> el texto, analiza estructura semántica y sintáctica, y <b>genera las versiones</b> simplificada/intermedia/avanzada mediante PLN, conservando los conceptos clave del currículo y ajustando complejidad léxica y sintáctica.</td></tr>
+    <tr><td><b>📤 Salida de datos</b></td><td>Borradores de las tres versiones + sugerencias de vocabulario y preguntas de comprensión por nivel, presentados en formato lista o documento exportable (PDF/DOCX).</td></tr>
+    <tr><td><b>🤝 Interacción</b></td><td>El docente <b>revisa, corrige y valida</b> (supervisión humana) desde la plataforma o herramienta web; los estudiantes reciben la versión asignada a su nivel por el canal habitual (aula virtual, impreso o proyección).</td></tr>
+  </table>
+  <div class="nota">💡 <b>Propósito educativo articulado:</b> la validación humana no es un paso accesorio — es el principio ético central (UNESCO, 2023): la IA <b>asiste</b>, la decisión pedagógica sigue siendo del docente.</div>
+</section>
+
+<section id="flujo">
+  <h2>4. Diagrama de flujo del nuevo proceso</h2>
+  <div class="flow">
+    <div class="fnode fstart">▶ INICIO: docente selecciona el texto curricular fuente</div>
+    <div class="arrow">↓</div>
+    <div class="fnode">📥 Entrada: define niveles lectores, longitud, vocabulario y condiciones (prompt en la herramienta)</div>
+    <div class="arrow">↓</div>
+    <div class="fnode">⚙️ Procesamiento IA (modelo GPT – aprendizaje profundo): tokenización → análisis semántico → generación de versiones multinivel</div>
+    <div class="arrow">↓</div>
+    <div class="fnode">📤 Salida: borradores de las 3 versiones + preguntas de comprensión por nivel</div>
+    <div class="arrow">↓</div>
+    <div class="fnode fdecision">◆ ¿Las versiones son pedagógicamente pertinentes?</div>
+    <div class="arrow">↓ sí</div>
+    <div class="fnode">🤝 Interacción: docente publica; estudiantes acceden por su nivel (aula virtual / impreso)</div>
+    <div class="arrow">↓</div>
+    <div class="fnode fend">■ FIN: aula multinivel con contenido validado</div>
+    <div class="flooptag" style="margin-top:6px">↺ no → vuelve al paso de Entrada: el docente ajusta el prompt y regenera</div>
+  </div>
+  <div class="nota">🛠️ <b>Herramientas que soportan el flujo:</b> ChatGPT (OpenAI) y MagicSchool AI para la generación; Diffit para adaptación por nivel lector; Google Classroom para la distribución.</div>
+</section>
+
+<section id="impacto">
+  <h2>5. Beneficios y desafíos de la propuesta</h2>
+  <div class="bd">
+    <div class="col">
+      <h3 style="color:var(--ok)">✅ Beneficios (viabilidad educativa)</h3>
+      <div class="item ben"><b>1. Ahorro de tiempo docente</b>Reduce de horas a minutos la preparación de materiales diferenciados, liberando tiempo para el acompañamiento directo y la retroalimentación personalizada.</div>
+      <div class="item ben"><b>2. Inclusión y equidad en el aula</b>Todos los estudiantes trabajan el <b>mismo contenido</b> con andamiajes distintos: apoya directamente los ajustes razonables (PIAR) y el Diseño Universal para el Aprendizaje.</div>
+      <div class="item ben"><b>3. Decisión pedagógica informada</b>Las versiones y sugerencias por nivel dan al docente un mapa claro del rango lector del grupo, apoyando la planificación por niveles de desempeño.</div>
+    </div>
+    <div class="col">
+      <h3 style="color:var(--warn)">⚠️ Desafíos (condiciones de implementación)</h3>
+      <div class="item des"><b>1. Sesgos y errores de contenido</b>El modelo puede generar imprecisiones o sesgos; su impacto pedagógico exige la <b>validación humana obligatoria</b> y la alfabetización crítica del docente frente a la IA.</div>
+      <div class="item des"><b>2. Brecha tecnológica y de conectividad</b>Sin internet ni dispositivos en la escuela o el hogar, el beneficio no llega a todos; exige estrategias híbridas (impresión de las versiones generadas).</div>
+      <div class="item des"><b>3. Privacidad, datos y derechos de autor</b>Ingresar datos personales de estudiantes a plataformas comerciales compromete la confidencialidad; solo deben usarse contenidos anónimos y cuentas institucionales. Además, usar contenidos de terceros para generar adaptaciones plantea dudas de derechos de autor (Rodríguez, 2024; UNESCO, 2023).</div>
+    </div>
+  </div>
+</section>
+
+<section id="herramientas">
+  <h2>6. Herramientas de IA que apoyan la implementación</h2>
+  <p style="margin-bottom:10px">Estas plataformas <b>consumen el modelo de aprendizaje profundo</b> (GPT) y lo traducen a funciones educativas listas para el aula:</p>
+  <div class="tools">
+    <div class="tool"><b>🤖 ChatGPT (OpenAI)</b>Acceso directo al modelo GPT; el docente controla la generación mediante prompts especializados (Gómez &amp; García-Brustenga, 2023).</div>
+    <div class="tool"><b>🪄 MagicSchool AI</b>Asistentes educativos preconfigurados: simplificación de textos, generación de preguntas y adaptación por nivel.</div>
+    <div class="tool"><b>📚 Diffit</b>Adapta cualquier texto a un nivel lector específico y añade vocabulario y preguntas de comprensión.</div>
+    <div class="tool"><b>📖 Newsela</b>Biblioteca de textos periodísticos en múltiples niveles de lectura, referencia de lo que logramos automatizar.</div>
+  </div>
+</section>
+
+<section id="refs">
+  <h2>7. Referencias (APA 7ª ed.)</h2>
+  <ul class="refs">
+    <li>Gómez D., F., &amp; García-Brustenga, G. (2023). <i>Prompts de utilidad para el profesorado para utilizar IA generativa</i>. Universitat Oberta de Catalunya, eLearning Innovation Center. https://openaccess.uoc.edu/handle/10609/147885</li>
+    <li>López Rosique, R. (2022). <i>Taller de IA para Educación Secundaria: divulgación, motivación y desarrollo</i>. Universitat Politècnica de València, 20–35.</li>
+    <li>Rodríguez, H. (2024). Hacia una ética sustentable con la Inteligencia Artificial en la investigación. <i>Cuadernos Latinoamericanos de Administración, 20</i>(38).</li>
+    <li>Silvina, I., Unzaga, E., &amp; Álvarez, M. (2024). Inteligencia Artificial en Ambientes de Aprendizaje Ubicuo: una revisión sistemática de literatura. <i>Revista Iberoamericana de Tecnología en Educación y Educación en Tecnología, 37</i>.</li>
+    <li>UNESCO. (2023). <i>El uso de la IA en la educación: decidir el futuro que queremos</i>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura. https://www.unesco.org/es/articles/el-uso-de-la-ia-en-la-educacion-decidir-el-futuro-que-queremos</li>
+    <li>Vázquez, F., &amp; Ramírez, R. (2024). Inteligencia Artificial en la academia: oportunidades y desafíos. <i>RECIBE, 13</i>(2).</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <b>Grupo 01</b> · Maestría en Educación Mediada por las TIC · Universidad Tecnológica de Bolívar · Actividad: Modelos de IA y su impacto en la enseñanza-aprendizaje
+</footer>
+
+</body>
+</html>
